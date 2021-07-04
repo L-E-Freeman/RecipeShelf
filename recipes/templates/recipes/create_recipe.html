@@ -4,12 +4,22 @@
     <form action="." method="post">
         {% csrf_token %}
         <h1>Recipe Information</h1>
+        {% if error_message %} 
+        <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
         {{ form.as_p }}
         <hr>
         <h2>Ingredients</h2>
-        {{ formset.management_form }}
-        {% for f_form in formset %}
-            {{ f_form.as_p }}
+        {{ iformset.management_form }}
+        {% for i_form in iformset %}
+            {{ i_form.as_p }}
+        {% endfor %}
+        <hr>
+        <h2>Method</h2>
+        {{ mformset.management_form }}
+        {% for m_form in mformset %}
+            <!--We want this counter to display 'step 1, step 2, etc.'-->
+            {{ forloop.counter }} {{ m_form.as_p }} 
         {% endfor %}
         <input type="submit" value="Submit">
     </form>

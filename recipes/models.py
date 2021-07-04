@@ -24,10 +24,9 @@ class Ingredient(models.Model):
         return self.ingredient_name
 
 class MethodStep(models.Model):
-    step = models.TextField()
+    # Stops 'step' from appearing before text box on webpage.
+    step = models.TextField(verbose_name="")
 
     recipe = models.ForeignKey(
         RecipeCard, on_delete=models.CASCADE, related_name="steps")
 
-    def __str__(self):
-        return 'step'
