@@ -1,0 +1,16 @@
+{% extends 'recipes/base.html' %}
+
+{% block content %}
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ formset.management_form }}
+        {% for f_form in formset %}
+            {{ f_form.as_p }}
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock content %}
+
+<!--The form action should go to the same view that serves the form - as a 
+post request. View will process and then you are sent to thank you page.-->
