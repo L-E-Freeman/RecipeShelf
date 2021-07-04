@@ -22,3 +22,12 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.ingredient_name
+
+class MethodStep(models.Model):
+    step = models.TextField()
+
+    recipe = models.ForeignKey(
+        RecipeCard, on_delete=models.CASCADE, related_name="steps")
+
+    def __str__(self):
+        return 'step'

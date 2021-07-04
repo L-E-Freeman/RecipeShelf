@@ -13,4 +13,4 @@ class IngredientForm(forms.ModelForm):
         exclude = ['recipe',]
     
 IngredientFormSet = inlineformset_factory(
-    RecipeCard, Ingredient, form = IngredientForm)
+    RecipeCard, Ingredient, form = IngredientForm, can_delete_extra = False)
