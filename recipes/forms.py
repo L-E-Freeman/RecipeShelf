@@ -2,6 +2,9 @@ from django import forms
 from .models import Ingredient, MethodStep, RecipeCard
 from django.forms import inlineformset_factory
 
+# Forms created using models. Formsets created using the forms which allow 
+# the same form to be repeated many times on a single page.
+
 class RecipeForm(forms.ModelForm):
     class Meta:
         model = RecipeCard
