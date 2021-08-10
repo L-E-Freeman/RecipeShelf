@@ -7,6 +7,7 @@ from . import views
 
 app_name = 'recipes'
 # TODO: Figure out why django is using the URL recipes/ 
+# remember you have changed the form action on create recipe page.
 urlpatterns = [
     path(
         '', 
