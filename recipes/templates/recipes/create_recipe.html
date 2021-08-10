@@ -1,7 +1,7 @@
 {% extends 'recipes/base.html' %}
 
 {% block content %}
-    <form action="." method="post">
+    <form action="create_recipe/" method="post">
         {% csrf_token %}
         <h1>Recipe Information</h1>
         {% if error_message %} 

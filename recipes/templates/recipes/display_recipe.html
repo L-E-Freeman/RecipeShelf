@@ -1,5 +1,11 @@
 {% extends 'recipes/base.html' %}
 
 {% block content %}
-    {{ recipe_card }}
+<h1>{{ recipe.recipe_name }}</h1>
+<h2>Recipe Source: {{ recipe.source }}</h2>
+<h2>Prep Time: {{ recipe.prep_time }}</h2>
+<h2>Servings: {{ recipe.servings }}</h2>
+<h2>{{ recipe.ingredients }}</h2>
+<h2>{{ recipe.methods }}</h2>
 {% endblock content %}
+

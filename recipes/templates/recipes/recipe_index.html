@@ -3,8 +3,8 @@
 {% block content %}
 <ul>
     {% for recipe in recipes %}
-        <!-- Need to add a link to display each recipe when clicked -->
-        <li>{{ recipe.recipe_name }}</li>
+        <!-- Need to add a link to display each recipe when clicked !-->
+        <li><a href = "{% url 'recipes:display_recipe' recipe.id %}">{{ recipe.recipe_name }}</a></li>
     {% endfor %}
 </ul>
 {% endblock content %}

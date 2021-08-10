@@ -1,15 +1,13 @@
-
-from django.core.serializers.base import DeserializedObject
-from django.http.response import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseRedirect, HttpResponse
-from django.core import serializers
 from django.views import generic
+from django.urls import reverse
 
 from .forms import (IngredientForm, IngredientFormSet, MethodFormSet, 
 RecipeForm)
 from .models import RecipeCard
 
+# Handles forms for creating recipe, both initialization and posting.
 def create_recipe(request):
     if request.method == "GET":
         form = RecipeForm()
@@ -36,11 +34,7 @@ def create_recipe(request):
             methods = mformset.save()
         if form.is_valid() and iformset.is_valid() and mformset.is_valid():
             # Redirect to successful submission page.
-            # TODO:
-                # have view button redirect to display_recipe view. Give 
-                # display recipe view a way to access the saved form objects.
-                # Potentially use a detailview here.
-            return redirect('recipe_submitted')
+            return redirect('recipes:recipe_submitted')
         else:
             # Rerender the form with an error message letting the user know 
             # a form isn't valid.
@@ -53,16 +47,21 @@ def create_recipe(request):
                 'mformset':mformset, 
                 'error_message': "Oops! A form isn't valid."})
 
-def recipe_submitted(request):
-    return render(request, 'recipes/recipe_submitted.html')
-
+# View for returning the index, a list of all submitted recipes, with links 
+# to view the recipe.
 class IndexView(generic.ListView):
     model = RecipeCard
     template_name = 'recipes/recipe_index.html'
     context_object_name = 'recipes'
 
-def display_recipe(request):
-    
-    return render(request, 'recipes/display_recipe.html', {
-        'recipe_card':recipe_card,
-    })
+# View for returning the recipe submitted page, which confirms the recipe has 
+# been submitted and redirects to the index page.
+def recipe_submitted(request):
+    return render(request, 'recipes/recipe_submitted.html',)
+
+
+def display_recipe(request, recipecard_id): 
+    recipe = get_object_or_404(RecipeCard, pk = recipecard_id)
+    return render(request, 'recipes/display_recipe.html', {'recipe':recipe})
+
+
