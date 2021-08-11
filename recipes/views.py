@@ -1,10 +1,9 @@
-from django.shortcuts import get_object_or_404, redirect, render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
 from django.views import generic
 from django.urls import reverse
 
-from .forms import (IngredientForm, IngredientFormSet, MethodFormSet, 
-RecipeForm)
+from .forms import (IngredientFormSet, MethodFormSet, RecipeForm)
 from .models import RecipeCard
 
 # Handles forms for creating recipe, both initialization and posting.
@@ -26,19 +25,17 @@ def create_recipe(request):
         form = RecipeForm(request.POST)
         if form.is_valid():
             recipe_card = form.save()
-        iformset = IngredientFormSet(request.POST, instance = recipe_card)
-        if iformset.is_valid():
-            ingredients = iformset.save()
-        mformset = MethodFormSet(request.POST, instance = recipe_card)
-        if mformset.is_valid():
-            methods = mformset.save()
+            iformset = IngredientFormSet(request.POST, instance = recipe_card)
+            mformset = MethodFormSet(request.POST, instance = recipe_card)
         if form.is_valid() and iformset.is_valid() and mformset.is_valid():
+            ingredients = iformset.save()
+            methods = mformset.save()
             # Redirect to successful submission page.
-            return redirect('recipes:recipe_submitted')
+            return HttpResponseRedirect(reverse('recipes:recipe_submitted'))
         else:
             # Rerender the form with an error message letting the user know 
             # a form isn't valid.
-            form = RecipeForm()
+            form = RecipeForm() 
             iformset = IngredientFormSet()
             mformset = MethodFormSet()
             return render(request, 'recipes/create_recipe.html', {
@@ -59,9 +56,17 @@ class IndexView(generic.ListView):
 def recipe_submitted(request):
     return render(request, 'recipes/recipe_submitted.html',)
 
+# TODO: Add a way to add a quantity to an ingredient. VVV
 
 def display_recipe(request, recipecard_id): 
     recipe = get_object_or_404(RecipeCard, pk = recipecard_id)
-    return render(request, 'recipes/display_recipe.html', {'recipe':recipe})
+    # Related name in models.py means you don't need to use ingredients_set, 
+    # just ingredients.
+    ingredients = recipe.ingredients.all()
+    methods = recipe.steps.all()
+    return render(request, 'recipes/display_recipe.html', {
+        'recipe':recipe, 
+        'ingredients': ingredients,
+        'methods':methods})
 
 

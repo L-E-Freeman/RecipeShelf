@@ -1,11 +1,19 @@
 {% extends 'recipes/base.html' %}
 
 {% block content %}
+<h1><a href = "{% url 'recipes:index' %}">Back to Index</a></h1>
 <h1>{{ recipe.recipe_name }}</h1>
 <h2>Recipe Source: {{ recipe.source }}</h2>
 <h2>Prep Time: {{ recipe.prep_time }}</h2>
+<h2>Cooking Time: {{ recipe.cooking_time }}</h2>
 <h2>Servings: {{ recipe.servings }}</h2>
-<h2>{{ recipe.ingredients }}</h2>
-<h2>{{ recipe.methods }}</h2>
+<h2>Ingredients:</h2>
+{% for ingredient in ingredients %}
+<li>{{ ingredient }} {{ingredient.quantity}}</li>
+{% endfor %}
+<h2>Method:</h2>
+{% for method in methods %}
+<li>{{ method }}</li>
+{% endfor %}
 {% endblock content %}
 

@@ -8,6 +8,7 @@ class RecipeCard(models.Model):
     cooking_time = models.DurationField()
     servings = models.IntegerField()
 
+    # Displays the object as the recipe name. 
     def __str__(self):
         return self.recipe_name
 
@@ -29,4 +30,7 @@ class MethodStep(models.Model):
 
     recipe = models.ForeignKey(
         RecipeCard, on_delete=models.CASCADE, related_name="steps")
+
+    def __str__(self):
+        return self.step
 
