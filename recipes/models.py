@@ -14,7 +14,7 @@ class RecipeCard(models.Model):
 
 class Ingredient(models.Model):
     ingredient_name = models.CharField(max_length=200)
-    quantity = models.IntegerField()
+    quantity = models.CharField(max_length=50)
 
     # ForeignKey defines a relationship where a recipecard can have multiple
     # ingredients, but an ingredient only has one recipe.

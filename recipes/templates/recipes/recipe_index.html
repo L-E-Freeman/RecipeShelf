@@ -5,10 +5,14 @@
 <h1><a href = "{% url 'recipes:create_recipe' %}">Create Recipe</a></h1>
 
 <h2>Existing Recipes</h2>
+{% if recipes %}
 <ul>
     {% for recipe in recipes %}
         <!-- recipe.id gives the url the recipe id to send to urls.py !-->
         <li><a href = "{% url 'recipes:display_recipe' recipe.id %}">{{ recipe.recipe_name }}</a></li>
     {% endfor %}
+{% else %}
+    <p>No recipes currently available.</p>
+{% endif %}
 </ul>
 {% endblock content %}

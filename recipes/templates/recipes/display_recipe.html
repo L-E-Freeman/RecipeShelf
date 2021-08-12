@@ -9,11 +9,12 @@
 <h2>Servings: {{ recipe.servings }}</h2>
 <h2>Ingredients:</h2>
 {% for ingredient in ingredients %}
-<li>{{ ingredient }} {{ingredient.quantity}}</li>
+<li>{{ ingredient }} ({{ingredient.quantity}})</li>
 {% endfor %}
 <h2>Method:</h2>
 {% for method in methods %}
-<li>{{ method }}</li>
+<!-- <pre> tells Django that the list should be perforated in new lines.-->
+<pre><strong>Step {{forloop.counter}}.</strong> {{ method }}</pre>
 {% endfor %}
 {% endblock content %}
 
