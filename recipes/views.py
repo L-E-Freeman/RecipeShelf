@@ -1,4 +1,5 @@
-from django.shortcuts import get_object_or_404, render
+from django.http.response import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.urls import reverse
@@ -8,6 +9,8 @@ from .models import RecipeCard
 
 # Handles forms for creating recipe, both initialization and posting.
 def create_recipe(request):
+    """Creates a form for recipe creation, including form initilization with 
+    blank values, and saving the data with user entered values."""
     if request.method == "GET":
         form = RecipeForm()
         iformset = IngredientFormSet()
@@ -44,21 +47,64 @@ def create_recipe(request):
                 'mformset':mformset, 
                 'error_message': "Oops! A form isn't valid."})
 
-# View for returning the index, a list of all submitted recipes, with links 
-# to view the recipe.
+def edit_recipe(request, recipecard_id):
+    """Allows a user to edit a recipe, the button for which is displayed on
+    the recipe display page. The edit form is prepopulated with the data 
+    which was previously entered by the user."""
+    # Get instance of the object which the form will be displaying.
+    recipe = get_object_or_404(RecipeCard, pk = recipecard_id)
+    # Define the data for the initial population of the form with the data
+    # already included in the object. 
+    data = {
+        'recipe_name':recipe.recipe_name, 
+        'source':recipe.source, 
+        'prep_time':recipe.prep_time, 
+        'cooking_time':recipe.cooking_time, 
+        'servings':recipe.servings}
+    form = RecipeForm(initial = data)
+    # Pass instance parameters to formsets.
+    iformset= IngredientFormSet(instance = recipe)
+    mformset = MethodFormSet(instance = recipe)
+
+    # Displays form prepopulated with existing data.
+    if request.method == "GET":
+        return render(request, 'recipes/edit_recipe.html', {
+                'form':form, 
+                'iformset':iformset, 
+                'mformset':mformset,})
+    elif request.method == "POST":
+        form = RecipeForm(request.POST, instance = recipe)
+        iformset = IngredientFormSet(request.POST, instance = recipe)
+        mformset = MethodFormSet(request.POST, instance = recipe)
+        if form.is_valid() and iformset.is_valid() and mformset.is_valid():
+            form.save()
+            iformset.save()
+            mformset.save()
+            return HttpResponseRedirect(reverse(
+                'recipes:edit_submitted', args = (recipecard_id,)))
+        else:
+            return HttpResponse("You've fucked it")
+
+def recipe_submitted(request):
+    """Redirect page the user sees once a new recipe has been submitted"""
+    return render(request, 'recipes/recipe_submitted.html',)
+
+def edit_submitted(request, recipecard_id):
+    """Redirect page the user sees once an existing recipe has been edited."""
+    return render(
+        request, 
+        'recipes/edit_submitted.html', 
+        {'recipecard_id': recipecard_id})
+
 class IndexView(generic.ListView):
+    """Returns the index of existing user created recipes, with links to the
+    recipes."""
     model = RecipeCard
     template_name = 'recipes/recipe_index.html'
     context_object_name = 'recipes'
 
-# View for returning the recipe submitted page, which confirms the recipe has 
-# been submitted and redirects to the index page.
-def recipe_submitted(request):
-    return render(request, 'recipes/recipe_submitted.html',)
-
-# TODO: Add a way to add a quantity to an ingredient. VVV
-
 def display_recipe(request, recipecard_id): 
+    """Displays the details for a user created recipe."""
     recipe = get_object_or_404(RecipeCard, pk = recipecard_id)
     # Related name in models.py means you don't need to use ingredients_set, 
     # just ingredients.
@@ -68,5 +114,4 @@ def display_recipe(request, recipecard_id):
         'recipe':recipe, 
         'ingredients': ingredients,
         'methods':methods})
-
 

@@ -1,0 +1,6 @@
+{% extends 'recipes/base.html' %}
+
+{% block content %}
+<h1><strong>Thank you, your recipe has been edited.</strong></h1>
+<h2><a href="{% url 'recipes:display_recipe' recipecard_id %}">Display recipe?</a></h2>
+{% endblock content %}

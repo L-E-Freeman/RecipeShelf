@@ -1,0 +1,33 @@
+{% extends 'recipes/base.html' %}
+
+{% block content %}
+<h1><a href = "{% url 'recipes:index' %}">Back to Index</a></h1>
+
+    <!-- Leave form action empty in order to send form to be processed back to
+    the same edit_recipe view.-->
+    <form action="" method="post">
+        {% csrf_token %}
+        <h1>Recipe Information</h1>
+        {% if error_message %} 
+        <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
+        {{ form.as_p }}
+        <hr>
+        <h2>Ingredients</h2>
+        {{ iformset.management_form }}
+        {% for i_form in iformset %}
+            {{ i_form.as_p }}
+        {% endfor %}
+        <hr>
+        <h2>Method</h2>
+        {{ mformset.management_form }}
+        {% for m_form in mformset %}
+            <!--We want this counter to display 'step 1, step 2, etc.'-->
+            {{ forloop.counter }} {{ m_form.as_p }} 
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock content %}
+
+<!--The form action should go to the same view that serves the form - as a 
+post request. View will process and then you are sent to thank you page.-->

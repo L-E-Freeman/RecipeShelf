@@ -23,4 +23,12 @@ urlpatterns = [
         'display_recipe/<int:recipecard_id>', 
         views.display_recipe, 
         name = 'display_recipe'),
+    path(
+        'edit_recipe/<int:recipecard_id>', 
+        views.edit_recipe, 
+        name = 'edit_recipe'),
+    path(
+        'edit_submitted/<int:recipecard_id>', 
+        views.edit_submitted,
+        name = 'edit_submitted'),
 ]
