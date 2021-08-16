@@ -14,14 +14,24 @@ class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
         exclude = ['recipe',]
-    
+
+# max_num stops extra forms showing up when user is editing the recipe.
 IngredientFormSet = inlineformset_factory(
-    RecipeCard, Ingredient, form = IngredientForm, can_delete_extra = False)
+    RecipeCard, 
+    Ingredient, 
+    form = IngredientForm, 
+    can_delete_extra = False, 
+    max_num=3)
 
 class MethodForm(forms.ModelForm):
     class Meta:
         model = MethodStep
         exclude = ['recipe',]
 
+# max_num stops extra forms showing up when user is editing the recipe.
 MethodFormSet = inlineformset_factory(
-    RecipeCard, MethodStep, form = MethodForm, can_delete_extra = False)
+    RecipeCard, 
+    MethodStep, 
+    form = MethodForm, 
+    can_delete_extra = False, 
+    max_num=3)

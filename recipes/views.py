@@ -82,6 +82,7 @@ def edit_recipe(request, recipecard_id):
             mformset.save()
             return HttpResponseRedirect(reverse(
                 'recipes:edit_submitted', args = (recipecard_id,)))
+        # TODO: Add an error message here.
         else:
             return HttpResponse("You've fucked it")
 
