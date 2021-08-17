@@ -2,8 +2,8 @@ from django.db import models
 from django.db.models.fields import DurationField
 
 class RecipeCard(models.Model):
-    recipe_name = models.CharField(max_length=200)
-    source = models.CharField(max_length=200)
+    recipe_name = models.CharField(max_length=50)
+    source = models.CharField(max_length=50)
     prep_time = models.DurationField()
     cooking_time = models.DurationField()
     servings = models.IntegerField()
@@ -13,7 +13,7 @@ class RecipeCard(models.Model):
         return self.recipe_name
 
 class Ingredient(models.Model):
-    ingredient_name = models.CharField(max_length=200)
+    ingredient_name = models.CharField(max_length=50)
     quantity = models.CharField(max_length=50)
 
     # ForeignKey defines a relationship where a recipecard can have multiple

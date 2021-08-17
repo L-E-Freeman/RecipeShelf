@@ -1,0 +1,20 @@
+BASE FUNCTIONALITY:
+
+--HOME PAGE--
+Display a log in or sign up option and the title of the app.
+
+--YOUR HOME PAGE--
+Displays options for adding a recipe or viewing a list of your published recipes (able to sort and search).
+
+--ADD RECIPE-- 
+Add a recipe with various metadata. Able to add list of ingredients and steps of the method. Perhaps add option to add picture to the recipe.
+
+--VIEW RECIPE--
+View recipe that is nicely formatted. Should have title at the top and usual layout at the bottom.
+
+Ingredient -> Needs model whereby ingredient can be added multiple times to one recipe.
+
+NICE TO HAVES:
+
+- Amount converter
+- Add picture
