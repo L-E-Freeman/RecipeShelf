@@ -2,17 +2,18 @@
 
 {% block content %}
 
-<h1><a href = "{% url 'recipes:create_recipe' %}">Create Recipe</a></h1>
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'recipes/recipe_index_style.css' %}">
 
 <h2>Existing Recipes</h2>
 {% if recipes %}
-<ul>
     {% for recipe in recipes %}
         <!-- recipe.id gives the url the recipe id to send to urls.py !-->
         <li><a href = "{% url 'recipes:display_recipe' recipe.id %}">{{ recipe.recipe_name }}</a></li>
     {% endfor %}
 {% else %}
-    <p>No recipes currently available.</p>
+    <p>No recipes currently available. Please create some!</p>
 {% endif %}
-</ul>
+
 {% endblock content %}

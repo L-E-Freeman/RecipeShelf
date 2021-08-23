@@ -1,10 +1,21 @@
 <!DOCTYPE html>
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'recipes/base_style.css' %}">
+
 <html>
+
     <head>
         <title>Recipe App</title>
     </head>
 
     <body>
+        <div class = "topnav">
+            <a href = "{% url 'recipes:index' %}">Index</a></li>
+            <a href = "{% url 'recipes:create_recipe' %}">Create Recipe</a></li>
+        </div>
+        
     {% block content %}
     
     {% endblock content %}

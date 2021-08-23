@@ -1,0 +1,26 @@
+/* Navigation bar */
+.topnav {
+    background-color: teal;
+    overflow: hidden;
+    padding: 0px;
+    margin: 0;
+}
+
+/* Navigation bar link appearance */
+.topnav a {
+    float:left;
+    color: white;
+    text-align: center;
+    padding: 14px 14px;
+    font-size: 25px;
+    text-decoration: none;
+}
+
+.topnav a:hover {
+    background-color: turquoise;
+}
+
+/* Removing padding from left hand side. */
+body {
+    margin: 0
+}

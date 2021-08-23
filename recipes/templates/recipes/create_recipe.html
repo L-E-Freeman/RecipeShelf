@@ -1,28 +1,69 @@
 {% extends 'recipes/base.html' %}
 
 {% block content %}
-<h1><a href = "{% url 'recipes:index' %}">Back to Index</a></h1>
+<!-- Load static must come after block content.-->
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'recipes/create_recipe_style.css' %}">
 
     <form action="." method="post">
         {% csrf_token %}
+
         <h1>Recipe Information</h1>
+
         {% if error_message %} 
-        <p><strong>{{ error_message }}</strong></p>
+        <strong>{{ error_message }}</strong>
         {% endif %}
-        {{ form.as_p }}
+        <div id="recipeinfo">
+            <p>
+                {{ form.recipe_name.label_tag }}
+                {{ form.recipe_name}}
+            </p>
+            <p>
+                {{ form.source.label_tag }}
+                {{ form.source }}
+            </p>
+            <p>
+                {{ form.prep_time.label_tag }}
+                {{ form.prep_time }}
+            </p>
+            <p>
+                {{ form.cooking_time.label_tag }}
+                {{ form.cooking_time }}
+            </p>
+            <p>
+                {{ form.servings.label_tag }}
+                {{ form.servings }}
+            </p>
+        </div>
+
         <hr>
+
         <h2>Ingredients</h2>
+
         {{ iformset.management_form }}
         {% for i_form in iformset %}
-            {{ i_form.as_p }}
+        <div id = ingredientinfo>
+            <p>
+                {{ i_form.ingredient_name.label_tag }} 
+                {{ i_form.ingredient_name }}
+            </p>
+            <p>
+                {{ i_form.quantity.label_tag }}
+                {{ i_form.quantity }}
+            </p>
+        </div>
         {% endfor %}
+
         <hr>
+        
         <h2>Method</h2>
+        <div id="methodinfo">
         {{ mformset.management_form }}
         {% for m_form in mformset %}
-            <!--We want this counter to display 'step 1, step 2, etc.'-->
-            {{ forloop.counter }} {{ m_form.as_p }} 
+            Step {{ forloop.counter }}. {{ m_form.as_p }} 
         {% endfor %}
+        </div>
         <input type="submit" value="Submit">
     </form>
 {% endblock content %}

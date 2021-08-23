@@ -1,8 +1,13 @@
 {% extends 'recipes/base.html' %}
+<!-- This loads template tags -->
 {% load recipes_extras %}
 
 {% block content %}
-<h1><a href = "{% url 'recipes:index' %}">Back to Index</a></h1>
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'recipes/display_recipe_style.css' %}">
+
 <h1><a href = "{% url 'recipes:edit_recipe' recipe.id %}">Edit Recipe</a></h1>
 <h1>{{ recipe.recipe_name }}</h1>
 <h2>Recipe Source: {{ recipe.source }}</h2>

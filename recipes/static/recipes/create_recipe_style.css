@@ -1,0 +1,37 @@
+/* display the following elements as if they were a table. */
+form  { display: table;      }
+p     { display: table-row;  }
+label { display: table-cell; }
+input { display: table-cell; }
+
+body {
+    background-color: lightgrey;
+}
+
+input[type="text"] textarea {
+    background-color: gray;
+}
+
+#recipeinfo {
+    border-radius: 25px;
+    border: 2px solid lightblue;
+    padding: 20px;
+    width: 300px;
+    height: 125px;
+}
+
+#ingredientinfo {
+    border-radius: 25px;
+    border: 2px solid lightblue;
+    padding: 20px;
+    width: 300px;
+    height: 40px;
+}
+
+#methodinfo {
+    border-radius: 25px;
+    border: 2px solid lightblue;
+    padding: 20px;
+    width: 300px;
+    height: 525px;
+}
