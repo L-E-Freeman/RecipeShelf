@@ -11,12 +11,16 @@
     </head>
 
     <body>
+    
         <div class = "topnav">
-            <a href = "{% url 'recipes:index' %}">Index</a></li>
-            <a href = "{% url 'recipes:create_recipe' %}">Create Recipe</a></li>
-            <a id = "signup" href = "{% url 'recipes:signup' %}">Sign Up</a></li>
+            <a href = "{% url 'recipes:index' %}">Index</a>
+            <a href = "{% url 'recipes:create_recipe' %}">Create Recipe</a>
+            <a id = "login" href = "{% url 'recipes:login' %}">Login</a>
+            <a id = "signup" href = "{% url 'recipes:signup' %}">Sign Up</a>
         </div>
         
+        <p>Logged in as: {{ request.user }}</p> 
+
     {% block content %}
     
     {% endblock content %}

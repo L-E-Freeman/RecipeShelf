@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.views import generic
 from django.urls import reverse
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from .forms import (IngredientFormSet, MethodFormSet, RecipeForm)
 from .models import RecipeCard
@@ -29,6 +29,9 @@ def create_recipe(request):
         # submit button is pressed. Check every form is valid and then save.
         form = RecipeForm(request.POST)
         if form.is_valid():
+            # Add currently logged in user to the user field defined in the
+            # model. 
+            form.instance.user = request.user
             recipe_card = form.save()
             iformset = IngredientFormSet(request.POST, instance = recipe_card)
             mformset = MethodFormSet(request.POST, instance = recipe_card)
@@ -84,7 +87,8 @@ def edit_recipe(request, recipecard_id):
             mformset.save()
             return HttpResponseRedirect(reverse(
                 'recipes:edit_submitted', args = (recipecard_id,)))
-        # TODO: Add an error message here.
+        # TODO: Add an error message here. This breaks when you clear text from
+        # a form field which has text in.
         else:
             return HttpResponse("You've fucked it")
 
@@ -105,6 +109,10 @@ class IndexView(generic.ListView):
     model = RecipeCard
     template_name = 'recipes/recipe_index.html'
     context_object_name = 'recipes'
+    # Display a list of objects that were created by the user currently logged
+    # in.
+    def get_queryset(self):
+        return RecipeCard.objects.filter(user=self.request.user)
 
 def display_recipe(request, recipecard_id): 
     """Displays the details for a user created recipe."""
@@ -135,5 +143,27 @@ def signup(request):
         else:
             error_message = f"The form wasn't valid. Please make sure you"
             f"follow the instructions carefully."
-            return render(request, 'recipes/signup.html', {'form':form})
-    return 
+            return render(request, 'recipes/signup.html', {
+                'form':form, 
+                'error_message':error_message})
+
+def login_user(request):
+    if request.method == "GET":
+        form = AuthenticationForm()
+        return render(request, 'recipes/login.html', {'form':form})
+    if request.method == "POST":
+        form = AuthenticationForm(request, data = request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(reverse('recipes:index'))
+        else:
+            # TODO: ADD UNSUCCESSFUL LOGIN PAGE.
+            form = AuthenticationForm()
+            error_message = "Username or password not valid. Please try again."
+            return render(request, 'recipes/login.html', {
+                'form':form, 
+                'error_message': error_message})

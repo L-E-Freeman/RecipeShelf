@@ -18,3 +18,4 @@ recipe object on the index page. (DONE)
 7. Make stuff look pretty with css.
 8. Add javascript for extra ingredients and methods.
 9. Add delete function to existing recipes. 
+10. Check functionality for login and sign up, make them pretty, add error messages where appropriate.

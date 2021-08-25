@@ -12,6 +12,10 @@ urlpatterns = [
         views.signup, 
         name = 'signup'),
     path(
+        'login', 
+        views.login_user, 
+        name = 'login'),
+    path(
         '', 
         views.IndexView.as_view(),
         name = 'index'),

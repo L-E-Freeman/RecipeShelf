@@ -8,7 +8,9 @@ from django.forms import inlineformset_factory
 class RecipeForm(forms.ModelForm):
     class Meta:
         model = RecipeCard
-        fields = '__all__'
+        # User field isn't to be entered in to the form, so we exclude it and 
+        # can hopefully associate a user with the post in views.
+        exclude = ['user']
 
 class IngredientForm(forms.ModelForm):
     class Meta:
