@@ -8,6 +8,10 @@ from . import views
 app_name = 'recipes'
 urlpatterns = [
     path(
+        'signup', 
+        views.signup, 
+        name = 'signup'),
+    path(
         '', 
         views.IndexView.as_view(),
         name = 'index'),

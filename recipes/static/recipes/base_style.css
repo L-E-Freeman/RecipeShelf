@@ -16,6 +16,15 @@
     text-decoration: none;
 }
 
+#signup {
+    float:right;
+    color: white;
+    text-align: center;
+    padding: 14px 14px;
+    font-size: 25px;
+    text-decoration: none;
+}
+
 .topnav a:hover {
     background-color: turquoise;
 }

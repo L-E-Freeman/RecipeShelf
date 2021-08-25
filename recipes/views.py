@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.urls import reverse
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 
 from .forms import (IngredientFormSet, MethodFormSet, RecipeForm)
 from .models import RecipeCard
@@ -116,3 +118,22 @@ def display_recipe(request, recipecard_id):
         'ingredients': ingredients,
         'methods':methods})
 
+def signup(request):
+    """Signup page for website."""
+    if request.method == 'GET':
+        form = UserCreationForm()
+        return render(request, 'recipes/signup.html', {'form':form})
+    elif request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return HttpResponseRedirect(reverse('recipes:index'))
+        else:
+            error_message = f"The form wasn't valid. Please make sure you"
+            f"follow the instructions carefully."
+            return render(request, 'recipes/signup.html', {'form':form})
+    return 

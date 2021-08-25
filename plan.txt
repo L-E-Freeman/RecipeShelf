@@ -14,6 +14,11 @@ View recipe that is nicely formatted. Should have title at the top and usual lay
 
 Ingredient -> Needs model whereby ingredient can be added multiple times to one recipe.
 
+--USER PERMISSIONS--
+User needs to sign in. Should only be able to view the recipes that they themselves have created. After
+sign up/ login they should be redirected to the index page where they can see their created recipes.
+
+
 NICE TO HAVES:
 
 - Amount converter
