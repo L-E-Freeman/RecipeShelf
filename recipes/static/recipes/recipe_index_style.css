@@ -10,8 +10,10 @@ li a {
 }
 h2 { 
     color: black;
+    font-family: helvetica;
+    font-size: 30px;
 }
 
 body {
-    background-color:lightgrey;
+    background-color: lightgrey;
 }

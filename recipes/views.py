@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.urls import reverse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from .forms import (IngredientFormSet, MethodFormSet, RecipeForm)
@@ -167,3 +167,10 @@ def login_user(request):
             return render(request, 'recipes/login.html', {
                 'form':form, 
                 'error_message': error_message})
+
+def logout_user(request):
+    logout(request)
+    return HttpResponse("Successful logout.")
+
+def homepage(request):
+    return render(request, 'recipes/home_page.html')
