@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseRedirect
@@ -5,11 +6,15 @@ from django.views import generic
 from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.views.generic.list import ListView
 
 from .forms import (IngredientFormSet, MethodFormSet, RecipeForm)
 from .models import RecipeCard
 
 # Handles forms for creating recipe, both initialization and posting.
+@login_required(login_url='recipes:homepage')
 def create_recipe(request):
     """Creates a form for recipe creation, including form initilization with 
     blank values, and saving the data with user entered values."""
@@ -25,8 +30,8 @@ def create_recipe(request):
             'iformset':iformset, 
             'mformset':mformset,})
     elif request.method == "POST":
-        # Create form instance and add the data included in the form when 
-        # submit button is pressed. Check every form is valid and then save.
+        # Create form instance and save the valid data included in the form 
+        # when submit button is pressed. 
         form = RecipeForm(request.POST)
         if form.is_valid():
             # Add currently logged in user to the user field defined in the
@@ -35,14 +40,25 @@ def create_recipe(request):
             recipe_card = form.save()
             iformset = IngredientFormSet(request.POST, instance = recipe_card)
             mformset = MethodFormSet(request.POST, instance = recipe_card)
-        if form.is_valid() and iformset.is_valid() and mformset.is_valid():
-            ingredients = iformset.save()
-            methods = mformset.save()
-            # Redirect to successful submission page.
-            return HttpResponseRedirect(reverse('recipes:recipe_submitted'))
+            if form.is_valid() and iformset.is_valid() and mformset.is_valid():
+                iformset.save()
+                mformset.save()
+                # Redirect to successful submission page.
+                return HttpResponseRedirect(reverse('recipes:recipe_submitted'))
+            else:
+                # Delete previously saved recipe card object.
+                recipe_card.delete()
+                # Rerender the form with an error message letting the user know 
+                # a form isn't valid.
+                form = RecipeForm() 
+                iformset = IngredientFormSet()
+                mformset = MethodFormSet()
+                return render(request, 'recipes/create_recipe.html', {
+                    'form':form, 
+                    'iformset':iformset, 
+                    'mformset':mformset, 
+                    'error_message': "Oops! A form isn't valid."})
         else:
-            # Rerender the form with an error message letting the user know 
-            # a form isn't valid.
             form = RecipeForm() 
             iformset = IngredientFormSet()
             mformset = MethodFormSet()
@@ -51,6 +67,8 @@ def create_recipe(request):
                 'iformset':iformset, 
                 'mformset':mformset, 
                 'error_message': "Oops! A form isn't valid."})
+       
+
 
 def edit_recipe(request, recipecard_id):
     """Allows a user to edit a recipe, the button for which is displayed on
@@ -103,9 +121,10 @@ def edit_submitted(request, recipecard_id):
         'recipes/edit_submitted.html', 
         {'recipecard_id': recipecard_id})
 
-class IndexView(generic.ListView):
+class IndexView(LoginRequiredMixin, ListView):
     """Returns the index of existing user created recipes, with links to the
     recipes."""
+    login_url = 'recipes:homepage'
     model = RecipeCard
     template_name = 'recipes/recipe_index.html'
     context_object_name = 'recipes'
@@ -115,16 +134,21 @@ class IndexView(generic.ListView):
         return RecipeCard.objects.filter(user=self.request.user)
 
 def display_recipe(request, recipecard_id): 
-    """Displays the details for a user created recipe."""
+    """Displays the details for a user created recipe. Will not allow 
+    unauthorized users to access other users' created recipes."""
     recipe = get_object_or_404(RecipeCard, pk = recipecard_id)
     # Related name in models.py means you don't need to use ingredients_set, 
     # just ingredients.
-    ingredients = recipe.ingredients.all()
-    methods = recipe.steps.all()
-    return render(request, 'recipes/display_recipe.html', {
-        'recipe':recipe, 
-        'ingredients': ingredients,
-        'methods':methods})
+    if recipe.user == request.user:
+        ingredients = recipe.ingredients.all()
+        methods = recipe.steps.all()
+        return render(request, 'recipes/display_recipe.html', {
+            'recipe':recipe, 
+            'ingredients': ingredients,
+            'methods':methods})
+    else: 
+        raise PermissionDenied
+
 
 def signup(request):
     """Signup page for website."""
@@ -148,6 +172,7 @@ def signup(request):
                 'error_message':error_message})
 
 def login_user(request):
+    """Login page"""
     if request.method == "GET":
         form = AuthenticationForm()
         return render(request, 'recipes/login.html', {'form':form})
@@ -169,8 +194,13 @@ def login_user(request):
                 'error_message': error_message})
 
 def logout_user(request):
+    """Logout functionality"""
     logout(request)
-    return HttpResponse("Successful logout.")
+    return HttpResponseRedirect(reverse('recipes:homepage'))
 
 def homepage(request):
-    return render(request, 'recipes/home_page.html')
+    """First page of website. Redirects to index if user is logged in."""
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('recipes:index'))
+    else:
+        return render(request, 'recipes/home_page.html')
