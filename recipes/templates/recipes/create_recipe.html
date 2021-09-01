@@ -6,6 +6,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'recipes/create_recipe_style.css' %}">
 
+
     <form action="." method="post">
         {% csrf_token %}
 
@@ -42,19 +43,23 @@
         <h2>Ingredients</h2>
 
         {{ iformset.management_form }}
-        {% for i_form in iformset %}
-        <div id = ingredientinfo>
-            <p>
-                {{ i_form.ingredient_name.label_tag }} 
-                {{ i_form.ingredient_name }}
-            </p>
-            <p>
-                {{ i_form.quantity.label_tag }}
-                {{ i_form.quantity }}
-            </p>
-        </div>
+        <div id=ingredientform>
+            {% for i_form in iformset %}
+            <div class = ingredientinfo>
+                {{ i_form.as_p }}
+            </div>
         {% endfor %}
+        </div>
 
+        <input type="button" value="Add More" id="add_more">
+
+        <script>
+            let formCount = {{ iformset.total_form_count }}
+            let emptyForm = '{{ iformset.empty_form.as_p|escapejs }}'
+        </script>
+
+        <script type="text/javascript" src="/static/recipes/add_more.js"></script>
+    
         <hr>
         
         <h2>Method</h2>
