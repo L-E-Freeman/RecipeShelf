@@ -10,9 +10,14 @@ addButton.addEventListener('click', addForm)
 function addForm(e) {
     // Prevent default action of button click so only addForm is executed.
     e.preventDefault()
-    
+
     // incrementing form count as it is static in html
     formCount++
+    
+    // Update the management form to use the correct value of TOTAL_FORMS
+    // to allow extra forms to be saved. 
+    let totalForms = document.getElementById("id_ingredients-TOTAL_FORMS")
+    totalForms.setAttribute('value', formCount+1)
     // selecting anything with id ingredientform
     let ingredientForm = document.querySelector("#ingredientform")
     // browser parses html sent from server in to DOM. 
@@ -28,4 +33,5 @@ function addForm(e) {
     // adding the virtual DOM container to the actual DOM element included in the 
     // HTML and rendered on the page.
     ingredientForm.appendChild(container)
+
 } 

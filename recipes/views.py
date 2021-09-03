@@ -1,4 +1,5 @@
 from django.core.exceptions import PermissionDenied
+from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseRedirect
@@ -40,6 +41,8 @@ def create_recipe(request):
             recipe_card = form.save()
             iformset = IngredientFormSet(request.POST, instance = recipe_card)
             mformset = MethodFormSet(request.POST, instance = recipe_card)
+            for iform in iformset:
+                print(iform.as_table())
             if form.is_valid() and iformset.is_valid() and mformset.is_valid():
                 iformset.save()
                 mformset.save()

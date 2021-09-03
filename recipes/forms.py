@@ -23,8 +23,8 @@ IngredientFormSet = inlineformset_factory(
     Ingredient, 
     form = IngredientForm, 
     can_delete_extra = False, 
-    can_delete = False,
-    max_num=3)
+    can_delete = False, 
+    extra=2)
 
 class MethodForm(forms.ModelForm):
     class Meta:
