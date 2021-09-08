@@ -8,10 +8,16 @@
 
 <h2>Existing Recipes</h2>
 {% if recipes %}
+<div class=outercontainer>
     {% for recipe in recipes %}
         <!-- recipe.id gives the url the recipe id to send to urls.py !-->
-        <li><a href = "{% url 'recipes:display_recipe' recipe.id %}">{{ recipe.recipe_name }}</a></li>
+        <!-- Javascript used, cursor:pointer indicates a link.-->
+        <div class=recipebox onclick='location.href="{% url 'recipes:display_recipe' recipe.id %}";' style="cursor:pointer;">
+            <p id=recipename>{{recipe.recipe_name}}</p>
+            <p id=recipesource>Source: {{recipe.source}}</p>
+        </div>
     {% endfor %}
+</div>
 {% else %}
     <p>No recipes currently available. Please create some!</p>
 {% endif %}

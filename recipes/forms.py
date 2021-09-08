@@ -22,7 +22,7 @@ IngredientFormSet = inlineformset_factory(
     RecipeCard, 
     Ingredient, 
     form = IngredientForm, 
-    can_delete_extra = False, 
+    can_delete_extra = True, 
     can_delete = False, 
     extra=2)
 
@@ -37,4 +37,5 @@ MethodFormSet = inlineformset_factory(
     MethodStep, 
     form = MethodForm, 
     can_delete_extra = False, 
+    can_delete= False,
     max_num=3)

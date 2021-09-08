@@ -16,26 +16,7 @@
         <strong>{{ error_message }}</strong>
         {% endif %}
         <div id="recipeinfo">
-            <p>
-                {{ form.recipe_name.label_tag }}
-                {{ form.recipe_name}}
-            </p>
-            <p>
-                {{ form.source.label_tag }}
-                {{ form.source }}
-            </p>
-            <p>
-                {{ form.prep_time.label_tag }}
-                {{ form.prep_time }}
-            </p>
-            <p>
-                {{ form.cooking_time.label_tag }}
-                {{ form.cooking_time }}
-            </p>
-            <p>
-                {{ form.servings.label_tag }}
-                {{ form.servings }}
-            </p>
+            {{ form.as_p }}
         </div>
 
         <hr>
@@ -51,24 +32,38 @@
         {% endfor %}
         </div>
 
-        <input type="button" value="Add More" id="add_more">
+        <input type="button" value="Add More" id="add_more_ingredients">
 
         <script>
-            let formCount = {{ iformset.total_form_count }}
-            let emptyForm = '{{ iformset.empty_form.as_p|escapejs }}'
+            let ingFormCount = {{ iformset.total_form_count }}
+            let emptyIngForm = '{{ iformset.empty_form.as_p|escapejs }}'
         </script>
 
-        <script src="{% static 'recipes/add_more.js' %}"></script>
+        <script src="{% static 'recipes/add_more_ingredients.js' %}"></script>
 
         <hr>
         
         <h2>Method</h2>
-        <div id="methodinfo">
+
         {{ mformset.management_form }}
-        {% for m_form in mformset %}
-            Step {{ forloop.counter }}. {{ m_form.as_p }} 
+        <div id=methodform>
+            {% for m_form in mformset %}
+            <div class=methodinfo>
+                Step {{ forloop.counter }}. {{ m_form.as_p }} 
+            </div>
         {% endfor %}
         </div>
+
+
+        <input type="button" value="Add More" id="add_more_methods">
+
+        <script>
+            let methFormCount = {{ mformset.total_form_count }}
+            let emptyMethForm = '{{ mformset.empty_form.as_p|escapejs }}'
+        </script>
+
+        <script src="{% static 'recipes/add_more_methods.js' %}"></script>
+
         <input type="submit" value="Submit">
     </form>
 {% endblock content %}

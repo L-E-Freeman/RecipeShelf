@@ -6,20 +6,17 @@ input[type="text"] textarea {
     background-color: gray;
 }
 
-#recipeinfo {
-    border-radius: 25px;
-    border: 2px solid lightblue;
-    padding: 20px;
-    width: 300px;
-    height: 125px;
+#recipeinfo p {
+    display: block;
+}
+
+#recipeinfo > p > label {
+    display: inline-block;
+    width: 120px;
 }
 
 #methodinfo {
-    border-radius: 25px;
-    border: 2px solid lightblue;
-    padding: 20px;
-    width: 300px;
-    height: 525px;
+    padding-left: 5px;
 }
 
 .ingredientinfo p {
