@@ -111,7 +111,7 @@ def edit_recipe(request, recipecard_id):
         # TODO: Add an error message here. This breaks when you clear text from
         # a form field which has text in.
         else:
-            return HttpResponse("You've fucked it")
+            return HttpResponse("One of the forms was invalid.")
 
 def recipe_submitted(request):
     """Redirect page the user sees once a new recipe has been submitted"""

@@ -23,7 +23,9 @@ IngredientFormSet = inlineformset_factory(
     Ingredient, 
     form = IngredientForm, 
     can_delete_extra = True, 
-    can_delete = False, 
+    # If something breaks with dyanimcally adding JS, it's because can_delete
+    # is now set to True.
+    can_delete = True, 
     extra=2)
 
 class MethodForm(forms.ModelForm):

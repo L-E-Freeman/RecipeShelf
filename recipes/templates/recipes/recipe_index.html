@@ -2,11 +2,12 @@
 
 {% block content %}
 
+{% load recipes_extras %}
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'recipes/recipe_index_style.css' %}">
 
-<h2>Existing Recipes</h2>
+<h2>My Recipes</h2>
 {% if recipes %}
 <div class=outercontainer>
     {% for recipe in recipes %}
@@ -15,6 +16,8 @@
         <div class=recipebox onclick='location.href="{% url 'recipes:display_recipe' recipe.id %}";' style="cursor:pointer;">
             <p id=recipename>{{recipe.recipe_name}}</p>
             <p id=recipesource>Source: {{recipe.source}}</p>
+            <p class=recipetimings>Prep: {{ recipe.prep_time | duration }}</p>
+            <p class=recipetimings>Cook: {{ recipe.cooking_time | duration }}</p>
         </div>
     {% endfor %}
 </div>

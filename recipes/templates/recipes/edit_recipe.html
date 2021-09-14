@@ -1,33 +1,53 @@
 {% extends 'recipes/base.html' %}
 
 {% block content %}
-<h1><a href = "{% url 'recipes:index' %}">Back to Index</a></h1>
 
-    <form action="" method="post">
-        {% csrf_token %}
-        <h1>Recipe Information</h1>
-        {% if error_message %} 
-        <p><strong>{{ error_message }}</strong></p>
-        {% endif %}
-        <table>
-        {{ form.as_table }}
-        </table>
-        <hr>
-        <h2>Ingredients</h2>
-        {{ iformset.management_form }}
-        <table>
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'recipes/edit_recipe_style.css' %}">
+
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    <h1>Recipe Information</h1>
+
+    {% if error_message %} 
+    <strong>{{ error_message }}</strong>
+    {% endif %}
+    <div id="recipeinfo">
+        {{ form.as_p }}
+    </div>
+
+    <hr>
+
+    <h2>Ingredients</h2>
+
+    {{ iformset.management_form }}
+    <div id=ingredientform>
         {% for i_form in iformset %}
-            {{ i_form.as_table }}
-        {% endfor %}
-        </table>
-        <hr>
-        <h2>Method</h2>
-        {{ mformset.management_form }}
+        <div class = ingredientinfo>
+            {{ i_form.as_p }}
+        </div>
+    {% endfor %}
+    </div>
+ 
+    <hr>
+    
+    <h2>Method</h2>
+
+    {{ mformset.management_form }}
+    <div id=methodform>
         {% for m_form in mformset %}
+        <div class=methodinfo>
             Step {{ forloop.counter }}. {{ m_form.as_p }} 
-        {% endfor %}
-        <input type="submit" value="Submit">
-    </form>
+        </div>
+    {% endfor %}
+    </div>
+
+    <input type="submit" value="Submit">
+</form>
 {% endblock content %}
+
 <!--The form action should go to the same view that serves the form - as a 
 post request. View will process and then you are sent to thank you page.-->

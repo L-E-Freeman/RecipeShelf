@@ -1,5 +1,6 @@
 .outercontainer {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
     height: 450px;
@@ -7,19 +8,20 @@
 }
 
 .recipebox {
+    flex: 0 0 21%;
     border-style: solid;
     border-color: black;
     border-radius: 5px;
-    background-color: white;
+    background-color: #F9FBFF;
     border-width: 1px;
-    width: 400px;
+    height: 450px;
     margin: 10px;
     text-align: center;
 }
 
 .recipebox:hover {
-    box-shadow: 5px 10px teal;
-    transform: scale(1.05);
+    box-shadow: 5px 5px teal;
+    transform: scale(1.03);
 }
 
 #recipename {
@@ -27,15 +29,19 @@
     font-family: helvetica;
 }
 
-
-
 #recipesource {
+    font-size: 20px;
+    font-family: helvetica;
+}
+
+.recipetimings {
     font-size: 20px;
     font-family: helvetica;
 }
 
 h2 { 
     color: black;
+    text-align: center;
     font-family: helvetica;
     font-size: 30px;
 }

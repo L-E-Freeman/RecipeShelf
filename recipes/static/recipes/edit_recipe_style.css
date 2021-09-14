@@ -1,0 +1,33 @@
+body {
+    background-color: lightgrey;
+}
+
+input[type="text"] textarea {
+    background-color: gray;
+}
+
+#recipeinfo p {
+    display: block;
+}
+
+#recipeinfo > p > label {
+    display: inline-block;
+    width: 120px;
+}
+
+#methodinfo {
+    padding-left: 5px;
+}
+
+.ingredientinfo p {
+    display: block;
+}
+
+.ingredientinfo {
+    padding-bottom: 10px;
+}
+
+.ingredientinfo > p > label {
+    display: inline-block;
+    width: 120px;
+}
