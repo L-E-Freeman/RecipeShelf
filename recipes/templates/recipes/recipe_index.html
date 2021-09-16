@@ -2,7 +2,6 @@
 
 {% block content %}
 
-{% load recipes_extras %}
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'recipes/recipe_index_style.css' %}">
@@ -16,8 +15,23 @@
         <div class=recipebox onclick='location.href="{% url 'recipes:display_recipe' recipe.id %}";' style="cursor:pointer;">
             <p id=recipename>{{recipe.recipe_name}}</p>
             <p id=recipesource>Source: {{recipe.source}}</p>
-            <p class=recipetimings>Prep: {{ recipe.prep_time | duration }}</p>
-            <p class=recipetimings>Cook: {{ recipe.cooking_time | duration }}</p>
+            <p id=recipedesc>{{recipe.recipe_description}}</p>
+            <p class=recipetimings>
+                {% if recipe.active_time_hours == 0 %}
+	                Active time: {{recipe.active_time_minutes}} mins
+                {% elif recipe.active_time_minutes == 0 %}
+	                Active time: {{recipe.active_time_hours}} hrs
+                {% else %}
+                    Active time: {{recipe.active_time_hours}} hrs {{recipe.active_time_minutes}} mins
+                {% endif %}</p>
+            <p class=recipetimings>
+                {% if recipe.total_time_hours == 0 %}
+	                Total time: {{recipe.total_time_minutes}} mins
+                {% elif recipe.total_time_minutes == 0 %}
+                    Total time: {{recipe.total_time_hours}} hrs
+                {% else %}
+                    Total time: {{recipe.total_time_hours}} hrs {{recipe.total_time_minutes}} mins
+                {% endif %}</p>
         </div>
     {% endfor %}
 </div>

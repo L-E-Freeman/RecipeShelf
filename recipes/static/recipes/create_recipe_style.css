@@ -2,8 +2,9 @@ body {
     background-color: lightgrey;
 }
 
-input[type="text"] textarea {
-    background-color: gray;
+input[type="text"], select {
+    background-color: white;
+    width: 50%;
 }
 
 #recipeinfo p {
@@ -13,6 +14,13 @@ input[type="text"] textarea {
 #recipeinfo > p > label {
     display: inline-block;
     width: 120px;
+    font-family: helvetica;
+}
+
+h1 {
+    font-family: helvetica;
+    font-size: 50px;
+    text-align: center;
 }
 
 #methodinfo {

@@ -1,6 +1,4 @@
 {% extends 'recipes/base.html' %}
-<!-- This loads template tags -->
-{% load recipes_extras %}
 
 {% block content %}
 
@@ -9,11 +7,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'recipes/display_recipe_style.css' %}">
 
 <h1><a href = "{% url 'recipes:edit_recipe' recipe.id %}">Edit Recipe</a></h1>
+<h1><a href = "{% url 'recipes:delete_recipe' recipe.id %}">Delete Recipe</a></h1>
+
 <h1>{{ recipe.recipe_name }}</h1>
 <h2>Recipe Source: {{ recipe.source }}</h2>
-<!--Using custom template tags to call the duration function.-->
-<h2>Prep Time: {{ recipe.prep_time|duration }}</h2>
-<h2>Cooking Time: {{ recipe.cooking_time|duration }}</h2>
+<h2>{{recipe.recipe_description}}</h2>
+<h2>Active time: {{ recipe.active_time_hours }} hrs {{ recipe.active_time_minutes }} mins</h2>
+<h2>Total time: {{ recipe.total_time_hours }} hrs {{ recipe.total_time_minutes }} mins</h2>
 <h2>Servings: {{ recipe.servings }}</h2>
 <h2>Ingredients:</h2>
 {% if ingredients %}

@@ -8,11 +8,18 @@ class RecipeCard(models.Model):
         on_delete=models.CASCADE, 
         related_name= 'recipe', 
         null=True)
+
     recipe_name = models.CharField(max_length=50)
     source = models.CharField(max_length=50)
-    prep_time = models.DurationField()
-    cooking_time = models.DurationField()
     servings = models.IntegerField()
+
+    active_time_hours = models.IntegerField(default=0)
+    active_time_minutes = models.IntegerField(default=0)
+
+    total_time_hours = models.IntegerField(default=0)
+    total_time_minutes = models.IntegerField(default=0)
+    
+    recipe_description = models.TextField(max_length=200)
 
     # Displays the object as the recipe name. 
     def __str__(self):

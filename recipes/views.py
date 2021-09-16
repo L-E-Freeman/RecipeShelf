@@ -41,26 +41,32 @@ def create_recipe(request):
             recipe_card = form.save()
             iformset = IngredientFormSet(request.POST, instance = recipe_card)
             mformset = MethodFormSet(request.POST, instance = recipe_card)
-            for iform in iformset:
-                print(iform.as_table())
             if form.is_valid() and iformset.is_valid() and mformset.is_valid():
                 iformset.save()
                 mformset.save()
                 # Redirect to successful submission page.
                 return HttpResponseRedirect(reverse('recipes:recipe_submitted'))
             else:
+                if form.is_valid == False:
+                    error = "Recipe information is invalid."
+                elif iformset.is_valid() == False:
+                    error = "Ingredients form is invalid."
+                elif mformset.is_valid() == False:
+                    error = "Methods form is invalid."
                 # Delete previously saved recipe card object.
                 recipe_card.delete()
                 # Rerender the form with an error message letting the user know 
-                # a form isn't valid.
-                form = RecipeForm() 
-                iformset = IngredientFormSet()
-                mformset = MethodFormSet()
+                # which form isn't valid. request.POST or None redisplays
+                # the data the user has already entered so it does not have to
+                # be filled in again.
+                form = RecipeForm(request.POST or None) 
+                iformset = IngredientFormSet(request.POST or None)
+                mformset = MethodFormSet(request.POST or None)
                 return render(request, 'recipes/create_recipe.html', {
                     'form':form, 
                     'iformset':iformset, 
                     'mformset':mformset, 
-                    'error_message': "Oops! A form isn't valid."})
+                    'error_message': error})
         else:
             form = RecipeForm() 
             iformset = IngredientFormSet()
@@ -81,12 +87,17 @@ def edit_recipe(request, recipecard_id):
     recipe = get_object_or_404(RecipeCard, pk = recipecard_id)
     # Define the data for the initial population of the form with the data
     # already included in the object. 
+
     data = {
         'recipe_name':recipe.recipe_name, 
         'source':recipe.source, 
-        'prep_time':recipe.prep_time, 
-        'cooking_time':recipe.cooking_time, 
-        'servings':recipe.servings}
+        'active_time_hours':recipe.active_time_hours,
+        'active_time_minutes':recipe.active_time_minutes, 
+        'total_time_hours': recipe.total_time_hours,
+        'total_time_minutes':recipe.total_time_minutes,
+        'servings':recipe.servings,
+        'recipe_description':recipe.recipe_description}
+
     form = RecipeForm(initial = data)
     # Pass instance parameters to formsets.
     iformset= IngredientFormSet(instance = recipe)
@@ -112,6 +123,14 @@ def edit_recipe(request, recipecard_id):
         # a form field which has text in.
         else:
             return HttpResponse("One of the forms was invalid.")
+
+@login_required
+def delete_recipe(request, recipecard_id):
+    recipe = get_object_or_404(RecipeCard, pk=recipecard_id)
+    if recipe.user == request.user:
+        recipe.delete()
+        return HttpResponseRedirect(reverse('recipes:index'))
+
 
 def recipe_submitted(request):
     """Redirect page the user sees once a new recipe has been submitted"""
