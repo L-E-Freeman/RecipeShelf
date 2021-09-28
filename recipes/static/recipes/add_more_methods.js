@@ -7,6 +7,7 @@ button press with event listener. */
 addMethButton.addEventListener('click', addMethForm)
 
 function addMethForm(e) {
+    
     e.preventDefault()
 
     // Increment the count of formset.
@@ -33,4 +34,20 @@ function addMethForm(e) {
     // Adds a node to the end of the list of children or a specified parent node.
     // Essentially, adding the methContainer to the end of methodform.
     methodForm.appendChild(methContainer)
+
+
+
+    // Total number of forms added with each new button press, allows numbering
+    // of additional method forms. ------------------------------------------
+
+    // Creating a div 
+    let numberingClass = document.createElement('div')
+    // Giving the div a classname
+    numberingClass.classList.add('additionalnumbering')
+    // Adding numer text to the div.
+    numberingClass.insertAdjacentText("afterbegin", methFormCount+'.')
+    // Inserting numbering text in to correct location when button is pressed.
+    methContainer.insertBefore(numberingClass, methContainer.firstChild)
+
+
 }

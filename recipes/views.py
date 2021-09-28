@@ -76,7 +76,6 @@ def create_recipe(request):
                 'iformset':iformset, 
                 'mformset':mformset, 
                 'error_message': "Oops! A form isn't valid."})
-       
 
 
 def edit_recipe(request, recipecard_id):

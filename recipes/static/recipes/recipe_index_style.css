@@ -40,10 +40,10 @@
 }
 
 h2 { 
+    font-family: Foodpacker;
     color: black;
     text-align: center;
-    font-family: helvetica;
-    font-size: 30px;
+    font-size: 60px;
 }
 
 body {

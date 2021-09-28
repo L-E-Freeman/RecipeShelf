@@ -1,9 +1,11 @@
 from django import forms
+from django.forms.formsets import BaseFormSet
 from .models import Ingredient, MethodStep, RecipeCard
 from django.forms import inlineformset_factory
 
 # Forms created using models. Formsets created using the forms which allow 
 # the same form to be repeated many times on a single page.
+
 
 class RecipeForm(forms.ModelForm):
     class Meta:
@@ -22,11 +24,10 @@ IngredientFormSet = inlineformset_factory(
     RecipeCard, 
     Ingredient, 
     form = IngredientForm, 
-    can_delete_extra = True, 
-    # If something breaks with dyanimcally adding JS, it's because can_delete
-    # is now set to True.
-    can_delete = True, 
-    extra=2)
+    can_delete_extra = False, 
+    can_delete = False, 
+    extra=2,
+    max_num=15)
 
 class MethodForm(forms.ModelForm):
     class Meta:

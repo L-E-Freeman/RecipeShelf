@@ -6,7 +6,6 @@ addIngButton.addEventListener('click', addIngForm)
 function addIngForm(e) {
     // Prevent default action of button click so only addForm is executed.
     e.preventDefault()
-    console.log('hello')
     // incrementing form count as it is static in html
     ingFormCount++
     

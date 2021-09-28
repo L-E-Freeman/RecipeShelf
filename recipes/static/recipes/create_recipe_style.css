@@ -1,41 +1,141 @@
+/* Background colour of page */
 body {
     background-color: lightgrey;
 }
 
-input[type="text"], select {
-    background-color: white;
-    width: 50%;
+/* RECIPE INFORMATION ------------------------------*/
+
+
+/* Top of page header */
+h1 {
+    font-family: Foodpacker;
+    color: black;
+    font-size: 60px;
+    text-align: center;
 }
 
+/* div to center the input boxes */
+.infocontainer {
+    display: flex;
+    justify-content: center;
+}
+
+/* Text input boxes */
+input[type="text"], select {
+    display: inline-block;
+    background-color: white;
+    width: 90%;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 12px 20px;
+    font-size: 25px;
+}
+
+/* Integer input boxes */
+input[type="number"], select {
+    background-color: white;
+    width: 90%;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 12px 20px;
+    font-size: 25px;
+}
+
+/* Textarea for recipe description */
+#id_recipe_description {
+    resize:none;
+    border: 1px solid black;
+    border-radius: 4px;
+    display: block;
+    width: 96%;
+    font-size: 25px;
+}
+
+/* recipeinfo segments */
 #recipeinfo p {
     display: block;
 }
 
+/* recipeinfo labels */
 #recipeinfo > p > label {
     display: inline-block;
-    width: 120px;
+    width: 250px;
     font-family: helvetica;
+    font-size: 25px;
 }
 
-h1 {
-    font-family: helvetica;
-    font-size: 50px;
+
+/* INGREDIENT INFORMATION ------------------------------*/
+
+
+/* Ingredient header */
+h2 {
+    font-family: Foodpacker;
+    color: black;
+    font-size: 60px;
     text-align: center;
 }
 
-#methodinfo {
-    padding-left: 5px;
-}
-
-.ingredientinfo p {
-    display: block;
-}
-
+/* Centering inputs */
 .ingredientinfo {
-    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
 }
 
+/* Ingredient labels */
 .ingredientinfo > p > label {
     display: inline-block;
-    width: 120px;
+    width: 200px;
+    font-family: helvetica;
+    font-size: 25px;
 }
+
+/* Centering the button */
+#add_more_ingredients {
+    display: block;
+    margin: 0 auto;
+}
+
+
+/* METHOD INFORMATION ------------------------------*/
+
+
+
+/* Centering input */
+.methodinfo {
+    display: flex;
+    justify-content: center;
+}
+
+/* Method textareas */
+
+.basenumbering {
+    display: inline-block;
+    font-family: helvetica;
+    font-size: 25px;
+    padding-top: 12px;
+    padding-right: 5px;
+}
+
+.additionalnumbering {
+    display: inline-block;
+    font-family: helvetica;
+    font-size: 25px;
+    padding-top: 12px;
+    padding-right: 5px;
+}
+
+textarea:not(#id_recipe_description) {
+    resize:none;
+    border: 1px solid black;
+    border-radius: 4px;
+    display: inline-block;
+    width: 96%;
+    font-size: 25px;
+}
+
+#add_more_methods {
+    display: block;
+    margin: 0 auto;
+}
+

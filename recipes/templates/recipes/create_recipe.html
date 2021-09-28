@@ -16,8 +16,12 @@
         {% if error_message %} 
         <strong>{{ error_message }}</strong>
         {% endif %}
-        <div id="recipeinfo">
-            {{ form.as_p }}
+        <div class=backgroundbox>
+            <div class=infocontainer>
+                <div id="recipeinfo">
+                    {{ form.as_p }}
+                </div>
+            </div>
         </div>
 
         <hr>
@@ -34,27 +38,30 @@
         </div>
 
         <input type="button" value="Add More" id="add_more_ingredients">
-
+        
         <script>
             let ingFormCount = {{ iformset.total_form_count }}
             let emptyIngForm = '{{ iformset.empty_form.as_p|escapejs }}'
         </script>
+
+        
 
         <script src="{% static 'recipes/add_more_ingredients.js' %}"></script>
 
         <hr>
         
         <h2>Method</h2>
+        
 
         {{ mformset.management_form }}
         <div id=methodform>
             {% for m_form in mformset %}
             <div class=methodinfo>
-                Step {{ forloop.counter }}. {{ m_form.as_p }} 
+                <div class=basenumbering>{{forloop.counter}}.</div>
+                {{ m_form.as_p }} 
             </div>
         {% endfor %}
         </div>
-
 
         <input type="button" value="Add More" id="add_more_methods">
 
@@ -66,6 +73,7 @@
         <script src="{% static 'recipes/add_more_methods.js' %}"></script>
 
         <input type="submit" value="Submit">
+
     </form>
 {% endblock content %}
 
