@@ -30,7 +30,7 @@
 }
 
 
-a:not(#logo):hover {
+a:not(#logo, .signup, .login):hover {
     text-decoration: underline;
 }
 

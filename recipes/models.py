@@ -13,11 +13,11 @@ class RecipeCard(models.Model):
     source = models.CharField(max_length=50)
     servings = models.IntegerField()
 
-    active_time_hours = models.IntegerField(default=0)
-    active_time_minutes = models.IntegerField(default=0)
+    active_time_hours = models.IntegerField()
+    active_time_minutes = models.IntegerField()
 
-    total_time_hours = models.IntegerField(default=0)
-    total_time_minutes = models.IntegerField(default=0)
+    total_time_hours = models.IntegerField()
+    total_time_minutes = models.IntegerField()
     
     recipe_description = models.TextField(max_length=200)
 

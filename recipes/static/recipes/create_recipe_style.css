@@ -8,7 +8,7 @@ body {
 
 /* Top of page header */
 h1 {
-    font-family: Foodpacker;
+    font-family: Romelio;
     color: black;
     font-size: 60px;
     text-align: center;
@@ -64,13 +64,19 @@ input[type="number"], select {
     font-size: 25px;
 }
 
+/* Hide integer increment spinners */
+input::-webkit-outer-spin-button, 
+input::-webkit-inner-spin-button {
+    display:none;
+}
+
 
 /* INGREDIENT INFORMATION ------------------------------*/
 
 
 /* Ingredient header */
 h2 {
-    font-family: Foodpacker;
+    font-family: Romelio;
     color: black;
     font-size: 60px;
     text-align: center;

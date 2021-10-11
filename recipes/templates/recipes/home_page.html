@@ -6,6 +6,13 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'recipes/home_page_style.css' %}">
 
-<h1>Welcome! Please log in or sign up to continue. </h1>
+<div class="welcomecontainer">
+    <div id="welcome">Welcome! Log in or Sign up</div>
+</div>
 
+<div class="linkcontainer">
+    <a class="signup" href = "{% url 'recipes:signup' %}">Sign up</a>
+    <a class="login" href = "{% url 'recipes:login' %}">Login</a></div>
+    
+</div>
 {% endblock %}

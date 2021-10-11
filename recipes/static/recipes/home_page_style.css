@@ -1,0 +1,114 @@
+body {
+    background-color: lightgrey;
+}
+
+.welcomecontainer {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 25px;
+}
+
+#welcome {
+    font-family: Helvetica;
+    font-size: 50px;
+    padding-top: 100px;
+    color: teal;
+}
+
+.linkcontainer {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    width: 700px;
+    padding-top: 150px;
+    border: solid;
+    border-width: 4px;
+    border-radius: 7px;
+    border-color: teal;
+    background-color: teal;
+    margin: auto;
+}
+
+.signup {
+    min-width: 120px;
+    display: inline-block;
+    font-family: Helvetica;
+    position: relative;
+    font-size: 35px;
+    height: 45px;
+    text-decoration: none;
+    background: teal;
+    color: white;
+    border: 2px solid;
+    border-radius: 7px;
+    margin-right: 35px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 0;
+    color: white;
+    overflow: hidden;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.signup:hover {
+    color: teal;
+}
+
+.signup:hover:after {
+    width: 100%;
+}
+
+.signup:after {
+    content:"";
+    position:absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height:100%;
+    background: white;
+}
+
+.login {
+    min-width: 90px;
+    display: inline-block;
+    font-family: Helvetica;
+    position: relative;
+    font-size: 35px;
+    height: 45px;
+    text-decoration: none;
+    background: teal;
+    color: white;
+    border: 2px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 0;
+    color: white;
+    overflow: hidden;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.login:hover {
+    color: teal;
+}
+
+.login:hover:after {
+    width: 100%;
+}
+
+.login:after {
+    content:"";
+    position:absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height:100%;
+    background: white;
+}
+

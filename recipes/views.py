@@ -14,6 +14,17 @@ from django.views.generic.list import ListView
 from .forms import (IngredientFormSet, MethodFormSet, RecipeForm)
 from .models import RecipeCard
 
+
+def rerender_form(request, form, iformset, mformset, error):
+    form = RecipeForm(request.POST or None) 
+    iformset = IngredientFormSet(request.POST or None)
+    mformset = MethodFormSet(request.POST or None)
+    return render(request, 'recipes/create_recipe.html', {
+        'form':form, 
+        'iformset':iformset, 
+        'mformset':mformset, 
+        'error_message':error})
+
 # Handles forms for creating recipe, both initialization and posting.
 @login_required(login_url='recipes:homepage')
 def create_recipe(request):
@@ -41,6 +52,25 @@ def create_recipe(request):
             recipe_card = form.save()
             iformset = IngredientFormSet(request.POST, instance = recipe_card)
             mformset = MethodFormSet(request.POST, instance = recipe_card)
+            # TODO: REFACTOR. 
+            if (recipe_card.active_time_hours <=0 and 
+                recipe_card.active_time_minutes <=0) or (
+                recipe_card.total_time_hours <=0 and
+                recipe_card.total_time_minutes <=0) or (
+                recipe_card.active_time_hours <0 or 
+                recipe_card.active_time_minutes <0 or
+                recipe_card.total_time_hours <0 or 
+                recipe_card.total_time_minutes <0):
+                recipe_card.delete()
+                error = "Recipe timings cannot be zero or negative."
+                form = RecipeForm(request.POST or None) 
+                iformset = IngredientFormSet(request.POST or None)
+                mformset = MethodFormSet(request.POST or None)
+                return render(request, 'recipes/create_recipe.html', {
+                    'form':form, 
+                    'iformset':iformset, 
+                    'mformset':mformset, 
+                    'error_message': error})
             if form.is_valid() and iformset.is_valid() and mformset.is_valid():
                 iformset.save()
                 mformset.save()
@@ -68,15 +98,16 @@ def create_recipe(request):
                     'mformset':mformset, 
                     'error_message': error})
         else:
-            form = RecipeForm() 
-            iformset = IngredientFormSet()
-            mformset = MethodFormSet()
+            form = RecipeForm(request.POST or None) 
+            iformset = IngredientFormSet(request.POST or None)
+            mformset = MethodFormSet(request.POST or None)
             return render(request, 'recipes/create_recipe.html', {
                 'form':form, 
                 'iformset':iformset, 
                 'mformset':mformset, 
                 'error_message': "Oops! A form isn't valid."})
 
+    
 
 def edit_recipe(request, recipecard_id):
     """Allows a user to edit a recipe, the button for which is displayed on
