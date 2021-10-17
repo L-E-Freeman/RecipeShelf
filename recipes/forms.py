@@ -2,6 +2,8 @@ from django import forms
 from django.forms.formsets import BaseFormSet
 from .models import Ingredient, MethodStep, RecipeCard
 from django.forms import inlineformset_factory
+from django.contrib.auth.forms import AuthenticationForm
+from django.forms.widgets import PasswordInput, TextInput
 
 # Forms created using models. Formsets created using the forms which allow 
 # the same form to be repeated many times on a single page.
@@ -42,3 +44,10 @@ MethodFormSet = inlineformset_factory(
     can_delete_extra = False, 
     can_delete= False,
     max_num=3)
+
+class CustomAuthForm(AuthenticationForm):
+    username = forms.CharField(widget=TextInput(attrs={
+        'class':'validate', 
+        'placeholder': 'Username'}))
+    password = forms.CharField(widget=PasswordInput(attrs={
+        'placeholder': 'Password'}))

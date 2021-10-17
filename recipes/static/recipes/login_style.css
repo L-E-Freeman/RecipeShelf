@@ -1,0 +1,65 @@
+.logincontainer {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    width: 700px;
+    padding-top: 130px;
+    border: solid;
+    border-width: 4px;
+    border-radius: 7px;
+    border-color: teal;
+    background-color: teal;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type=text] {
+    display: inline-block;
+    width: 300px;
+    height: 40px;
+    border-width: 1px;
+    border-color: white;
+    border-radius: 3px;
+    font-size: 25px;
+}
+
+input[type=password] {
+    display: inline-block;
+    width: 300px;
+    height: 40px;
+    border-width: 1px;
+    border-color: white;
+    border-radius: 3px;
+    font-size: 25px;
+}
+
+/* Removes highlighted border on click */
+input[type=text]:focus {
+    outline-width: 0;
+}
+
+input[type=password]:focus {
+    outline-width: 0;
+}
+
+input[type=text]::placeholder {
+    font-size: 25px;
+    padding-left: 5px;
+    margin-top: 10px;
+}
+
+input[type=password]::placeholder {
+
+    font-size: 25px;
+    padding-left: 5px;
+}
+
+.formcontainer {
+    display: flex;
+    justify-content: center;
+}
+
+.username {
+    padding-bottom: 5px;
+}

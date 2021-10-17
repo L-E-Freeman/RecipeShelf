@@ -1,13 +1,30 @@
 {% extends 'recipes/base.html' %}
 
 {% block content %}
-<h2>Login</h2>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'recipes/login_style.css' %}">
+
 {% if error_message %} 
 {{ error_message }}
 {% endif %}
+
 <form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
+    {% csrf_token %}
+    <div class="logincontainer">
+        <div class="formcontainer">
+            <div class="forms">
+                <div class="username"> 
+                    {{ form.username }}
+                </div>
+                <div class="password">
+                    {{ form.password }}
+                </div>
+                
+                <button type="submit">Login</button>
+            </div>
+        </div>
+    </div>
 </form>
+
 {% endblock %}
+

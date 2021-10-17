@@ -11,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list import ListView
 
-from .forms import (IngredientFormSet, MethodFormSet, RecipeForm)
+from .forms import (IngredientFormSet, MethodFormSet, RecipeForm, CustomAuthForm)
 from .models import RecipeCard
 
 
@@ -226,10 +226,10 @@ def signup(request):
 def login_user(request):
     """Login page"""
     if request.method == "GET":
-        form = AuthenticationForm()
+        form = CustomAuthForm()
         return render(request, 'recipes/login.html', {'form':form})
     if request.method == "POST":
-        form = AuthenticationForm(request, data = request.POST)
+        form = CustomAuthForm(request, data = request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
