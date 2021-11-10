@@ -1,19 +1,22 @@
 from django.test import TestCase
-import datetime
 
 from recipes.models import RecipeCard, Ingredient, MethodStep
 
 class ModelTests(TestCase):
     """Tests RecipeCard model"""
-    @classmethod
-    def setUpTestData(cls):
+    def setUp(self):
         """Set up non-modified objects used by all test methods."""
+        # Object is receiving default values that can be changed when method 
+        # is used 
         recipe = RecipeCard.objects.create(
             recipe_name = 'Test Recipe', 
             source = 'Test Source', 
-            prep_time = datetime.timedelta(minutes = 20), 
-            cooking_time = datetime.timedelta(minutes = 30), 
-            servings = 3)
+            servings = 3,
+            active_time_hours = 2,
+            active_time_minutes = 15,
+            total_time_hours = 2, 
+            total_time_minutes = 15, 
+            recipe_description = 'Test Description')
         recipe.save()
 
         ingredient = Ingredient.objects.create(
