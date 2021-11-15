@@ -1,0 +1,25 @@
+
+
+FINISHED:
+- Users should not be able to access recipes that do not belong to them.  (DONE, BUT CHECK FUNCTIONALITY)
+- FIX edit recipe functionality. (DONE, MAY REQUIRE TESTING)
+- Timings should not be allowed to be negative numbers. REFACTOR IN TO SEPERATE
+FUNCTIONS.
+
+TO DO:
+- Rewrite tests to work with logins perhaps.
+- First page of website should be centered login/ sign up box with site logo there. 
+- Change float right to flexbox for the welcome message.
+- Make display/create/edit recipe pages pretty
+- Make login/signup pretty and allow email signup
+- Write automated tests for current functionality. This may include using WebTest (partial done)
+- Check functionality for login and sign up, make them pretty, add error messages where appropriate.
+- Confirmation method for recipe deletion.
+- Option to add picture for recipe.
+- Add placeholders or helptext to form fields.
+- Remove delete checkboxes in create recipe.
+- Find way to delete stuff in edit page with can_delete set to False. Write django
+bug report for the ridiculous issue.
+- Timings for minutes should be up to and including 60 but not above.
+- Fix extra form being rendered on invalid form submission. 
+- if single hr timings should say 'hr' not 'hrs'

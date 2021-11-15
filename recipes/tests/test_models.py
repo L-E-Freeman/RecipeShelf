@@ -1,6 +1,9 @@
 from django.test import TestCase
 
 from recipes.models import RecipeCard, Ingredient, MethodStep
+from django.contrib.auth.models import User
+
+
 
 class ModelTests(TestCase):
     """Tests RecipeCard model"""
@@ -9,6 +12,10 @@ class ModelTests(TestCase):
         # Object is receiving default values that can be changed when method 
         # is used 
         recipe = RecipeCard.objects.create(
+            # Creating test user to allow testing of authentication only parts
+            # of site.
+            user = User.objects.create_user(
+                username='temporary', password='temporary'),
             recipe_name = 'Test Recipe', 
             source = 'Test Source', 
             servings = 3,
