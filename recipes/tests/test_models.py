@@ -4,7 +4,6 @@ from recipes.models import RecipeCard, Ingredient, MethodStep
 from django.contrib.auth.models import User
 
 
-
 class ModelTests(TestCase):
     """Tests RecipeCard model"""
     def setUp(self):

@@ -15,16 +15,6 @@ from .forms import (IngredientFormSet, MethodFormSet, RecipeForm, CustomAuthForm
 from .models import RecipeCard
 
 
-def rerender_form(request, form, iformset, mformset, error):
-    form = RecipeForm(request.POST or None) 
-    iformset = IngredientFormSet(request.POST or None)
-    mformset = MethodFormSet(request.POST or None)
-    return render(request, 'recipes/create_recipe.html', {
-        'form':form, 
-        'iformset':iformset, 
-        'mformset':mformset, 
-        'error_message':error})
-
 # Handles forms for creating recipe, both initialization and posting.
 @login_required(login_url='recipes:homepage')
 def create_recipe(request):

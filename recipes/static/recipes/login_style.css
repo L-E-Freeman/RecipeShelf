@@ -1,39 +1,72 @@
-body {
-    margin:0 auto;
+/* When screen is 600px and above */
+@media screen and (min-width: 600px) {
+    .logincontainer {
+        display: flex;
+        position: fixed;
+        left: 1000px;
+        top: 225px;
+        height: 450px;
+        width: 700px;
+        border: solid;
+        border-width: 4px;
+        border-radius: 7px;
+        border-color: teal;
+        background-color: teal;
+    }
+    
+    .formcontainer {
+        display: flex;
+        justify-content: center;
+        margin:auto;
+    }
+    
+    .logo {
+        font-size: 130px;
+        font-family: Foodpacker;
+        color: teal;
+    }
+    
+    .logocontainer {
+        display: flex;
+        position: fixed;
+        left: 250px;
+        padding-top: 350px;
+    }
 }
 
-.logincontainer {
-    display: flex;
-    position: fixed;
-    left: 1000px;
-    top: 225px;
-    height: 450px;
-    width: 700px;
-    border: solid;
-    border-width: 4px;
-    border-radius: 7px;
-    border-color: teal;
-    background-color: teal;
+/* When screen is below 1708px*/
+@media screen and (max-width: 1708px) {
+    /* position: relative and margin selectors allow div to be centered 
+    when page is being resized */
+    .logincontainer {
+        display: flex;
+        position: relative;
+        left: auto !important;
+        margin: 0 auto;
+        top: 225px;
+        height: 450px;
+        width: 700px;
+        border: solid;
+        border-width: 4px;
+        border-radius: 7px;
+        border-color: teal;
+        background-color: teal;
+    }
+
+    .formcontainer {
+        display: flex;
+        justify-content: center;
+        margin:auto;
+    }
+
+    .logocontainer {
+        display: flex;
+        position: absolute!important;
+        padding-top: 50px !important;
+        top: 0 !important;
+    }
 }
 
-.formcontainer {
-    display: flex;
-    justify-content: center;
-    margin:auto;
-}
-
-.logo {
-    font-size: 150px;
-    font-family: Foodpacker;
-    color: teal;
-}
-
-.logocontainer {
-    display: flex;
-    position: fixed;
-    padding-top: 350px;
-    left: 250px;
-}
 
 body {
     background-color: lightgrey;
