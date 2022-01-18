@@ -8,29 +8,28 @@
 {{ error_message }}
 {% endif %}
 
-
-<div class="logincontainer">
-    <div class="formcontainer">
-        <div class="forms">
-            <form method="post">
-                {% csrf_token %}
-                <div class="username"> 
-                    {{ form.username }}
-                </div>
-                <div class="password">
-                    {{ form.password }}
-                </div>
-                <button type="submit">Login</button>
-            </form>
+<div class="wrapper">
+    <div class="logincontainer">
+        <div class="formcontainer">
+            <div class="forms">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="username"> 
+                        {{ form.username }}
+                    </div>
+                    <div class="password">
+                        {{ form.password }}
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
         </div>
     </div>
+
+    <div class="logocontainer">
+        <div class="logo">RecipeShelf</div>
+    </div>
 </div>
-
-
-<div class="logocontainer">
-    <div class="logo">RecipeShelf</div>
-</div>
-
 
 
 
