@@ -39,63 +39,33 @@ def create_recipe(request):
             # Add currently logged in user to the user field defined in the
             # model. 
             form.instance.user = request.user
-            recipe_card = form.save()
+            # Returns an object of the model without saving it to DB.
+            recipe_card = form.save(commit=False)
             iformset = IngredientFormSet(request.POST, instance = recipe_card)
-            mformset = MethodFormSet(request.POST, instance = recipe_card)
-            # TODO: REFACTOR. 
-            if (recipe_card.active_time_hours <=0 and 
-                recipe_card.active_time_minutes <=0) or (
-                recipe_card.total_time_hours <=0 and
-                recipe_card.total_time_minutes <=0) or (
-                recipe_card.active_time_hours <0 or 
-                recipe_card.active_time_minutes <0 or
-                recipe_card.total_time_hours <0 or 
-                recipe_card.total_time_minutes <0):
-                recipe_card.delete()
-                error = "Recipe timings cannot be zero or negative."
-                form = RecipeForm(request.POST or None) 
-                iformset = IngredientFormSet(request.POST or None)
-                mformset = MethodFormSet(request.POST or None)
-                return render(request, 'recipes/create_recipe.html', {
-                    'form':form, 
-                    'iformset':iformset, 
-                    'mformset':mformset, 
-                    'error_message': error})
+            mformset = MethodFormSet(request.POST, instance = recipe_card)     
             if form.is_valid() and iformset.is_valid() and mformset.is_valid():
+                recipe_card.save()
                 iformset.save()
                 mformset.save()
                 # Redirect to successful submission page.
                 return HttpResponseRedirect(reverse('recipes:recipe_submitted'))
             else:
-                if form.is_valid == False:
-                    error = "Recipe information is invalid."
-                elif iformset.is_valid() == False:
-                    error = "Ingredients form is invalid."
-                elif mformset.is_valid() == False:
-                    error = "Methods form is invalid."
-                # Delete previously saved recipe card object.
-                recipe_card.delete()
-                # Rerender the form with an error message letting the user know 
-                # which form isn't valid. request.POST or None redisplays
-                # the data the user has already entered so it does not have to
-                # be filled in again.
                 form = RecipeForm(request.POST or None) 
                 iformset = IngredientFormSet(request.POST or None)
                 mformset = MethodFormSet(request.POST or None)
                 return render(request, 'recipes/create_recipe.html', {
                     'form':form, 
                     'iformset':iformset, 
-                    'mformset':mformset, 
-                    'error_message': error})
+                    'mformset':mformset})
         else:
+            # If form not valid.
             form = RecipeForm(request.POST or None) 
             iformset = IngredientFormSet(request.POST or None)
             mformset = MethodFormSet(request.POST or None)
             return render(request, 'recipes/create_recipe.html', {
                 'form':form, 
                 'iformset':iformset, 
-                'mformset':mformset, 
-                'error_message': "Oops! A form isn't valid."})
+                'mformset':mformset})
 
     
 
@@ -216,6 +186,7 @@ def signup(request):
 def login_user(request):
     """Login page"""
     if request.method == "GET":
+        # Custom auth form used to include placeholder values.
         form = CustomAuthForm()
         return render(request, 'recipes/login.html', {'form':form})
     if request.method == "POST":

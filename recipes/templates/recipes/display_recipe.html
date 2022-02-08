@@ -6,31 +6,37 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'recipes/display_recipe_style.css' %}">
 
-<h1><a href = "{% url 'recipes:edit_recipe' recipe.id %}">Edit Recipe</a></h1>
-<h1><a href = "{% url 'recipes:delete_recipe' recipe.id %}">Delete Recipe</a></h1>
+<div class="recipecard">
+    <div class="recipeheader">
+        <h1>{{ recipe.recipe_name }}</h1>
+        <h2>Source: {{ recipe.source }}</h2>
+        <h2>Active time: {{ recipe.active_time_hours }} hrs {{ recipe.active_time_minutes }} mins</h2>
+        <h2>Total time: {{ recipe.total_time_hours }} hrs {{ recipe.total_time_minutes }} mins</h2>
+        <h2>Servings: {{ recipe.servings }}</h2>
+    </div>
 
-<h1>{{ recipe.recipe_name }}</h1>
-<h2>Recipe Source: {{ recipe.source }}</h2>
-<h2>{{recipe.recipe_description}}</h2>
-<h2>Active time: {{ recipe.active_time_hours }} hrs {{ recipe.active_time_minutes }} mins</h2>
-<h2>Total time: {{ recipe.total_time_hours }} hrs {{ recipe.total_time_minutes }} mins</h2>
-<h2>Servings: {{ recipe.servings }}</h2>
-<h2>Ingredients:</h2>
-{% if ingredients %}
-    {% for ingredient in ingredients %}
-    <li>{{ ingredient }} ({{ingredient.quantity}})</li>
-    {% endfor %}
-{% else %} 
-There are currently no ingredients for this recipe.
-{% endif %}
-<h2>Method:</h2>
-{% if methods %}
-    {% for method in methods %}
-    <!-- <pre> tells Django that the list should be perforated in new lines.-->
-    <pre><strong>Step {{forloop.counter}}.</strong> {{ method }}</pre>
-    {% endfor %}
-{% else %} 
-There is currently no method for this recipe.
-{% endif %}
-{% endblock content %}
+    <div class="modifyrecipelinks">
+        <h1><a href = "{% url 'recipes:edit_recipe' recipe.id %}">Edit Recipe</a></h1>
+        <h1><a href = "{% url 'recipes:delete_recipe' recipe.id %}">Delete Recipe</a></h1>
+    </div>
 
+    <h2>{{recipe.recipe_description}}</h2>
+    <h2>Ingredients:</h2>
+    {% if ingredients %}
+        {% for ingredient in ingredients %}
+        <li>{{ ingredient }} ({{ingredient.quantity}})</li>
+        {% endfor %}
+    {% else %} 
+    There are currently no ingredients for this recipe.
+    {% endif %}
+    <h2>Method:</h2>
+    {% if methods %}
+        {% for method in methods %}
+        <!-- <pre> tells Django that the list should be perforated in new lines.-->
+        <pre><strong>Step {{forloop.counter}}.</strong> {{ method }}</pre>
+        {% endfor %}
+    {% else %} 
+    There is currently no method for this recipe.
+    {% endif %}
+    {% endblock content %}
+</div>

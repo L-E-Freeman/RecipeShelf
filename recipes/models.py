@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.fields import DurationField
 from django.contrib.auth.models import User
 
 class RecipeCard(models.Model):
